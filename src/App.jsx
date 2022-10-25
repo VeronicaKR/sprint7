@@ -1,60 +1,57 @@
 import { useState } from "react";
-import {lista} from "./utils/lista"
 
-const finalPrice = (price) => `${price.toFixed(2)}`
+export const App = () => {
 
-export default function App() {
+  const [stateWeb, setStateWeb] = useState(false);
+  const [stateSeo, setStateSeo] = useState(false);
+  const [stateAds, setStateAds] = useState(false);
 
-  const [isCheck, setIsCheck] = useState(
-    new Array(lista.length).fill(false)
-  );
-
-  const [total, setTotal] = useState(0);
-
-  const onChange = (position) =>{
-    const updateCheckedState = isCheck.map((item,index) =>
-    index === position ? !item : item
-    );
-    setIsCheck(updateCheckedState);
-
-    const total = updateCheckedState.reduce(
-      (sum,currentState,index)=>{
-        if (currentState === true){
-          return sum+lista[index].price;
-        }
-        return sum;
-      },
-      0
-    );
-    setTotal(total);
-
-  };
-
-  return (
-    <>
-    <h1> ¿Qué quieres hacer?</h1>
-    <ul className="lista">
-      {lista.map(({id,price}, index) =>{
-        return (
-          <li key={index}>
-            <div className="lista-items">
-              <div className="selector">
-                <input type="checkbox"
-                id={`${index}`}
-                check={isCheck[index].toString()}
-                onChange ={()=> onChange(index)}
-                />
-                <label htmlFor={`custom-checkbox-${index}`}>{id}</label>
-              </div>
-            </div>
-          </li>
-        );
-      })}
-      <li className="list-items">
-        <div className="left-selection">Total:</div>
-        <div className="right-selection">{finalPrice(total)}</div>
-      </li>
-    </ul>
-    </>
-  );
+  const handleOnChange = (e) => {
+    if(e.target.name === 'web'){
+      setStateWeb(!stateWeb);  
+    } 
+    if (e.target.name === 'seo'){
+      setStateSeo(!stateSeo);
     }
+    if(e.target.name === 'ads'){
+      setStateAds(!stateAds);
+    }
+    console.log(e.target.checked)
+  }
+
+  const total= () =>{
+    let totalPrice = 0;
+    if(stateWeb === true){
+      totalPrice = totalPrice + 500
+    } 
+    if(stateSeo === true){
+     totalPrice= totalPrice + 300
+    } 
+    if(stateAds === true){
+      totalPrice= totalPrice + 200
+    }
+    return totalPrice
+
+  }
+    return(
+      <>
+        <p>Que quieres hacer?</p>
+        <input type="checkbox" name="web" checked={stateWeb} onChange={handleOnChange}/>una pagina web 500€ 
+        <br />
+        <input type="checkbox" name="seo" checked={stateSeo} onChange={handleOnChange}/>una consultoria SEO 300€ 
+        <br />
+        <input type="checkbox" name="ads" checked={stateAds} onChange={handleOnChange}/>una campaña de Google Ads 200€ 
+        <div>
+          esta marcado web {stateWeb ? "si" : "no"}
+          <br />
+          esta marcado seo {stateSeo ? "si" : "no"}
+          <br />
+          esta marcado ads {stateAds ? "si" : "no"}
+        </div>
+        <div>
+          Total:{total()}
+        </div>
+      </>
+        )
+}
+
