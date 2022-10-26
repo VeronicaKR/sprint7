@@ -42,13 +42,6 @@ export const App = () => {
         <br />
         <input type="checkbox" name="ads" checked={stateAds} onChange={handleOnChange}/>una campaña de Google Ads 200€ 
         <div>
-          esta marcado web {stateWeb ? "si" : "no"}
-          <br />
-          esta marcado seo {stateSeo ? "si" : "no"}
-          <br />
-          esta marcado ads {stateAds ? "si" : "no"}
-        </div>
-        <div>
           Total:{total()}
         </div>
       </>
