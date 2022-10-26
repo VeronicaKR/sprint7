@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Panel } from "./components/Panel";
 
 export const App = () => {
 
@@ -22,17 +23,25 @@ export const App = () => {
   const total= () =>{
     let totalPrice = 0;
     if(stateWeb === true){
-      totalPrice = totalPrice + 500
+      totalPrice = totalPrice + 500 + item
     } 
     if(stateSeo === true){
-     totalPrice= totalPrice + 300
+      totalPrice = totalPrice + 300
     } 
     if(stateAds === true){
-      totalPrice= totalPrice + 200
+      totalPrice = totalPrice + 200
     }
-    return totalPrice
-
+    return totalPrice 
   }
+
+const [item, setItem] = useState(0);
+
+  const sum = (page,idioma) => {
+    setItem(page * 30 + idioma * 30)
+    }
+  
+
+    
     return(
       <>
         <p>Que quieres hacer?</p>
@@ -41,9 +50,15 @@ export const App = () => {
         <input type="checkbox" name="seo" checked={stateSeo} onChange={handleOnChange}/>una consultoria SEO 300€ 
         <br />
         <input type="checkbox" name="ads" checked={stateAds} onChange={handleOnChange}/>una campaña de Google Ads 200€ 
-        <div>
+        <br />
+        <p>
           Total:{total()}
+        </p>
+        
+        <div>{stateWeb ? <Panel sum={sum} /> : <></>}  
+            
         </div>
+
       </>
         )
 }
