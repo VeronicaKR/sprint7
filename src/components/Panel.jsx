@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { PanelStyled } from "./PanelStyled"
+import { PanelStyled } from "./PanelStyled";
+import { ButtonPlus } from "./ButtonPlus";
+import { ButtonLess } from "./ButtonLess";
 
 
 export const Panel = ({sum}) => {
@@ -23,9 +25,22 @@ useEffect(() => {
 
   return (
     <PanelStyled>
+      
         <div>
-            <p> Numero de paginas  <input type="number" name="page" onChange={onChange}/></p>
-            <p> Numero de idiomas  <input type="number" name="idioma" onChange={onChange}/></p>
+            <p> Numero de paginas  
+                <ButtonPlus item={page} setitem={setPage}/>
+                <input type="number" name="page" onChange={onChange} value={page}/>
+                <ButtonLess item={page} setitem={setPage}/>
+              
+            </p>
+
+
+
+            <p> Numero de idiomas  
+              <ButtonPlus item={idioma} setitem={setIdioma}/>
+              <input type="number" name="idioma" onChange={onChange} value={idioma}/>
+              <ButtonLess item={idioma} setitem={setIdioma}/>
+              </p>
         </div>
      </PanelStyled>
     )
