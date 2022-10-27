@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Panel } from "./components/Panel";
 
 export const App = () => {
 
-  const [stateWeb, setStateWeb] = useState(false);
-  const [stateSeo, setStateSeo] = useState(false);
-  const [stateAds, setStateAds] = useState(false);
+  const [stateWeb, setStateWeb] = useState(()=>{
+    const initialValue = JSON.parse(localStorage.getItem('item1'))
+    return initialValue ? initialValue : false;
+  });
+  const [stateSeo, setStateSeo] = useState(()=>{
+    const initialValue = JSON.parse(localStorage.getItem('item2'))
+    return initialValue ? initialValue : false;
+  });
+  const [stateAds, setStateAds] = useState(() => {
+    const initialValue = JSON.parse(localStorage.getItem('item3'))
+    return initialValue ? initialValue : false;
+  });
+
+
+  useEffect(() => {
+      localStorage.setItem('item1', JSON.stringify(stateWeb))
+      localStorage.setItem('item2',JSON.stringify(stateSeo))
+      localStorage.setItem('item3',JSON.stringify(stateAds))
+   }, [stateAds,stateSeo,stateWeb])
+  
 
   const handleOnChange = (e) => {
     if(e.target.name === 'web'){

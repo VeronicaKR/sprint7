@@ -5,8 +5,19 @@ import { ButtonLess } from "./ButtonLess";
 
 
 export const Panel = ({sum}) => {
-  const [page, setPage] = useState(0);
-  const [idioma, setIdioma] = useState(0); 
+  const [page, setPage] = useState(()=>{
+    const initialValue= JSON.parse(localStorage.getItem('item4'))
+    return initialValue ? initialValue : 0;
+  });
+  const [idioma, setIdioma] = useState(()=>{
+    const initialValue = JSON.parse(localStorage.getItem('item5'))
+    return initialValue ? initialValue : 0;
+  }); 
+
+  useEffect(() => {
+    localStorage.setItem('item4', JSON.stringify(page))
+    localStorage.setItem('item5',JSON.stringify(idioma))
+ }, [page,idioma])
 
  const onChange = (e) =>{
  
