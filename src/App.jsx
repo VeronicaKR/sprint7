@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Panel } from "./components/Panel";
 
-export const App = () => {
+
+export const App = () =>  {
 
   const [stateWeb, setStateWeb] = useState(()=>{
     const initialValue = JSON.parse(localStorage.getItem('item1'))
