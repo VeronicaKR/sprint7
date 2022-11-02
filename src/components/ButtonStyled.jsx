@@ -8,9 +8,9 @@ export const ButtonStyled = styled.button`
   border-radius: 5px;
   color: #f1f0f0;
   margin:2px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:0px;
   
- 
- 
-  
-
 `;

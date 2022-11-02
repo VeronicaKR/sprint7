@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { PanelStyled } from "./PanelStyled";
 import { ButtonPlus } from "./ButtonPlus";
 import { ButtonLess } from "./ButtonLess";
+import { Modal } from "./Modal";
 
 
 export const Panel = ({sum}) => {
@@ -28,7 +29,7 @@ export const Panel = ({sum}) => {
     setIdioma(Number(e.target.value));
   }
    }
-console.log({page,idioma})
+
 
 useEffect(() => {
    sum(page,idioma);
@@ -36,22 +37,25 @@ useEffect(() => {
 
   return (
     <PanelStyled>
-      
-        <div>
-            <p> Numero de paginas  
+      <div className="row">
+        <div className="col d-flex align-items-center">
+          <p> Numero de paginas   </p> 
                 <ButtonPlus item={page} setitem={setPage}/>
                 <input type="number" name="page" onChange={onChange} value={page}/>
                 <ButtonLess item={page} setitem={setPage}/>
-              
-            </p>
+              <Modal item={page} type="page"/>
+        </div>
 
-
-
-            <p> Numero de idiomas  
-              <ButtonPlus item={idioma} setitem={setIdioma}/>
+      </div>
+      <div className="row">
+        <div className="col d-flex align-items-center">
+            <p> Numero de idiomas  </p>
+              <ButtonPlus className="btn btn primary" item={idioma} setitem={setIdioma}/>
               <input type="number" name="idioma" onChange={onChange} value={idioma}/>
               <ButtonLess item={idioma} setitem={setIdioma}/>
-              </p>
+              <Modal item={idioma} type="idioma"/>
+              
+        </div>
         </div>
      </PanelStyled>
     )

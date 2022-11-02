@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const PanelStyled = styled.div`
-    width:250px;
-    height:100px;
+    width:350px;
+    height:150px;
     border: 3px solid black;
     border-radius: 0.775rem; 
     display:flex;

@@ -37,6 +37,12 @@ export const App = () =>  {
     }
     console.log(e.target.checked)
   }
+const [item, setItem] = useState(0);
+const [totalPrice, setTotalPrice] = useState()
+useEffect(() => {
+  total();
+}, [stateWeb,stateSeo,stateAds,item])
+
 
   const total= () =>{
     let totalPrice = 0;
@@ -49,20 +55,59 @@ export const App = () =>  {
     if(stateAds === true){
       totalPrice = totalPrice + 200
     }
-    return totalPrice 
+    setTotalPrice(totalPrice)
   }
 
-const [item, setItem] = useState(0);
+
 
   const sum = (page,idioma) => {
     setItem(page * 30 + idioma * 30)
     }
   
+const [presupuesto, setPresupuesto] = useState()
+
+  const onChangePresupuesto = (e) =>{
+  setPresupuesto(e.target.value)
+}
+
+const [cliente, setCliente] = useState()
+  const onChangeCliente = (e) =>{
+    setCliente(e.target.value)
+  }
+
+const [listadoPresupuestos, setListadoPresupuestos] = useState([])
+
+
+const onSubmit = (e) =>{
+  e.preventDefault()
+
+  const presupuestos = {
+    presupuesto : presupuesto,
+    cliente : cliente,
+    web: stateWeb,
+    seo: stateSeo,
+    ads : stateAds,
+    precio: totalPrice,
+    fecha: new Date().toDateString(),
+  }
+  setListadoPresupuestos([...listadoPresupuestos,presupuestos])
+  
+}
+console.log(listadoPresupuestos)
+
+
+
+
+
+
 
     
     return(
-      <>
+      <div className="container mt-5">
+      <div className="row">
+      <div className="col-6">
         <p>Que quieres hacer?</p>
+        
         <input type="checkbox" name="web" checked={stateWeb} onChange={handleOnChange}/>una pagina web 500€ 
         <br />
         <input type="checkbox" name="seo" checked={stateSeo} onChange={handleOnChange}/>una consultoria SEO 300€ 
@@ -70,14 +115,83 @@ const [item, setItem] = useState(0);
         <input type="checkbox" name="ads" checked={stateAds} onChange={handleOnChange}/>una campaña de Google Ads 200€ 
         <br />
         <p>
-          Total:{total()}
+          Total:{totalPrice}
         </p>
-        
         <div>{stateWeb ? <Panel sum={sum} /> : <></>}  
-            
         </div>
+</div>
 
-      </>
+<div className="col-6"><form onSubmit={onSubmit}>
+  <div className="row"> 
+    <div className="col-10">
+      <input type="text" id="presupuesto" onChange={onChangePresupuesto}/>
+          Nombre del presupuesto    
+    </div> 
+  </div>
+  <div className="row">
+    <div className="col-10"  >
+      <input type="text" id="cliente" onChange={onChangeCliente}/>Nombre del cliente
+    </div>
+    <button type="submit">Crear</button>   
+  </div> 
+  </form>
+  <div className="row">
+      <div className="col-3">
+        presupuesto
+      </div>
+      <div className="col-2">
+        cliente
+      </div>
+      <div className="col-1">
+        web
+      </div>
+      <div className="col-1">
+        seo
+      </div>
+      <div className="col-1">
+        ads
+      </div>
+      <div className="col-2">
+        precio
+      </div>
+      <div className="col-2">
+        fecha
+      </div>
+  <ul>
+   
+    {listadoPresupuestos.map(object => {
+      const {presupuesto,cliente,web,seo,ads,precio,fecha } =object
+    return (
+      <div className="row" key={fecha}>
+        <div className="col-3">
+        {presupuesto} 
+      </div>
+      <div className="col-2">
+        {cliente}
+      </div>
+      <div className="col-1">
+        {web? 'X': ''}
+      </div>
+      <div className="col-1">
+        {seo? 'X': ''}
+      </div>
+      <div className="col-1">
+        {ads? 'X': ''}
+      </div>
+      <div className="col-2">
+        {precio}
+      </div>
+      <div className="col-2">
+        {fecha}
+      </div>
+        </div> 
+    );
+})}
+  </ul> 
+  </div>
+</div>
+</div>
+      </div>
         )
 }
 
