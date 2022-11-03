@@ -75,8 +75,8 @@ const [cliente, setCliente] = useState()
     setCliente(e.target.value)
   }
 
-const [listadoPresupuestos, setListadoPresupuestos] = useState([])
-
+const [listadoPresupuestos, setListadoPresupuestos] = useState([]);
+const [listadoMostrar, setListadoMostrar] = useState([]);
 
 const onSubmit = (e) =>{
   e.preventDefault()
@@ -88,16 +88,29 @@ const onSubmit = (e) =>{
     seo: stateSeo,
     ads : stateAds,
     precio: totalPrice,
-    fecha: new Date().toDateString(),
+    fecha: new Date(),
   }
   setListadoPresupuestos([...listadoPresupuestos,presupuestos])
-  
+  setListadoMostrar([...listadoPresupuestos,presupuestos])
+  }
+
+
+const listaAlfabetica = () => {
+
+  const ordenAlfabetico = [...listadoPresupuestos]
+  ordenAlfabetico.sort((a,b)=> (a.cliente > b.cliente ? 1: a.cliente < b.cliente ? -1 : 0))
+  setListadoMostrar([...ordenAlfabetico])
 }
-console.log(listadoPresupuestos)
 
+const listaFecha = () => {
+const ordenFecha = [...listadoPresupuestos]
+ordenFecha.sort((a,b) => a.fecha - b.fecha)
+setListadoMostrar([...ordenFecha])
+}
 
-
-
+const mostrarOriginal  = () => {
+    setListadoMostrar(listadoPresupuestos)
+}
 
 
 
@@ -159,8 +172,8 @@ console.log(listadoPresupuestos)
       </div>
   <ul>
    
-    {listadoPresupuestos.map(object => {
-      const {presupuesto,cliente,web,seo,ads,precio,fecha } =object
+    {listadoMostrar.map(object => {
+      const {presupuesto,cliente,web,seo,ads,precio,fecha } = object
     return (
       <div className="row" key={fecha}>
         <div className="col-3">
@@ -182,12 +195,17 @@ console.log(listadoPresupuestos)
         {precio}
       </div>
       <div className="col-2">
-        {fecha}
+        {`${fecha}`}
       </div>
         </div> 
     );
 })}
   </ul> 
+  </div>
+  <div>
+    <button onClick={listaAlfabetica}>Orden Alfabetico</button>
+    <button onClick={listaFecha}>Orden por fecha</button>
+    <button onClick={mostrarOriginal}>Mostrar original</button>
   </div>
 </div>
 </div>
