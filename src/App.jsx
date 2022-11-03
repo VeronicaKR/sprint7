@@ -58,9 +58,7 @@ useEffect(() => {
     setTotalPrice(totalPrice)
   }
 
-
-
-  const sum = (page,idioma) => {
+const sum = (page,idioma) => {
     setItem(page * 30 + idioma * 30)
     }
   
@@ -75,8 +73,20 @@ const [cliente, setCliente] = useState()
     setCliente(e.target.value)
   }
 
-const [listadoPresupuestos, setListadoPresupuestos] = useState([]);
+const [listadoPresupuestos, setListadoPresupuestos] = useState(() => {
+  const almacenados = JSON.parse(localStorage.getItem('presupuestos'))
+  return almacenados ? almacenados : [];
+});
 const [listadoMostrar, setListadoMostrar] = useState([]);
+
+ useEffect(() => {
+    localStorage.setItem('presupuestos',JSON.stringify(listadoPresupuestos))
+  }, [listadoPresupuestos])
+
+  useEffect(() => {
+   setListadoMostrar(listadoPresupuestos)
+  }, [])
+  
 
 const onSubmit = (e) =>{
   e.preventDefault()
@@ -96,7 +106,6 @@ const onSubmit = (e) =>{
 
 
 const listaAlfabetica = () => {
-
   const ordenAlfabetico = [...listadoPresupuestos]
   ordenAlfabetico.sort((a,b)=> (a.cliente > b.cliente ? 1: a.cliente < b.cliente ? -1 : 0))
   setListadoMostrar([...ordenAlfabetico])
@@ -119,12 +128,11 @@ const handleChange = (e) => {
  }
 const onSubmitBusqueda = (e) => {
   e.preventDefault()
-  const result = listadoPresupuestos.filter(presupuestos => {
-  if(presupuestos.presupuesto === search){
-    return presupuesto
+  const result = listadoPresupuestos.filter(x => {
+  if(x.presupuesto === search){
+    return x
   }
 });
-console.log(result)
 setListadoMostrar(result)
 };
 
