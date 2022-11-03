@@ -112,6 +112,22 @@ const mostrarOriginal  = () => {
     setListadoMostrar(listadoPresupuestos)
 }
 
+const [search, setSearch] = useState ();
+
+const handleChange = (e) => {
+ setSearch (e.target.value);
+ }
+const onSubmitBusqueda = (e) => {
+  e.preventDefault()
+  const result = listadoPresupuestos.filter(presupuestos => {
+  if(presupuestos.presupuesto === search){
+    return presupuesto
+  }
+});
+console.log(result)
+setListadoMostrar(result)
+};
+
 
 
     
@@ -206,6 +222,10 @@ const mostrarOriginal  = () => {
     <button onClick={listaAlfabetica}>Orden Alfabetico</button>
     <button onClick={listaFecha}>Orden por fecha</button>
     <button onClick={mostrarOriginal}>Mostrar original</button>
+    <form onSubmit={onSubmitBusqueda}>
+    <input type="text"  onChange= {handleChange}/>
+    <button type="submit">Busqueda</button>  
+    </form>
   </div>
 </div>
 </div>
